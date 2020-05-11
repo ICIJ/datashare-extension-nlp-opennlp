@@ -12,7 +12,7 @@
     <name>OpenNLP datashare extension</name>
     <url>https://github.com/ICIJ/datashare-extension-nlp-opennlp</url>
     <inceptionYear>2020</inceptionYear>
-    <description>CoreNLP pipeline extension to datashare</description>
+    <description>OpenNLP pipeline extension to datashare</description>
 
     <organization>
         <name>ICIJ</name>
@@ -63,7 +63,7 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>datashare-api</artifactId>
-            <version>6.4.1</version>
+            <version>6.5.0</version>
         </dependency>
 
         <dependency>

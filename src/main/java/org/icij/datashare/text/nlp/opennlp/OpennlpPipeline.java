@@ -15,6 +15,7 @@ import opennlp.tools.tokenize.TokenizerModel;
 import opennlp.tools.util.Span;
 import opennlp.tools.util.model.ArtifactProvider;
 import org.icij.datashare.PropertiesProvider;
+import org.icij.datashare.text.Document;
 import org.icij.datashare.text.Language;
 import org.icij.datashare.text.NamedEntity;
 import org.icij.datashare.text.nlp.AbstractPipeline;
@@ -32,6 +33,7 @@ import static java.util.Arrays.copyOfRange;
 import static java.util.stream.Collectors.toList;
 import static opennlp.tools.util.Span.spansToStrings;
 import static org.icij.datashare.text.Language.*;
+import static org.icij.datashare.text.NamedEntity.allFrom;
 import static org.icij.datashare.text.nlp.NlpStage.*;
 
 
@@ -97,17 +99,17 @@ public final class OpennlpPipeline extends AbstractPipeline {
     }
 
     @Override
-    public Annotations process(String content, String docId, Language language) {
-        Annotations annotations = new Annotations(docId, getType(), language);
+    public List<NamedEntity> process(Document doc) {
+        Annotations annotations = new Annotations(doc.getId(), getType(), doc.getLanguage());
         String annotators = "SENTENCING ~ TOKENIZING";
         if (targetStages.contains(POS))
             annotators += " ~ POS-TAGGING";
         if (targetStages.contains(NER))
             annotators += " ~ NAME-FINDING";
-        LOGGER.info(annotators + " for " + language);
+        LOGGER.info(annotators + " for " + doc.getLanguage());
 
         // Split input into sentences
-        Span[] sentenceSpans = sentences(content, language);
+        Span[] sentenceSpans = sentences(doc.getContent(), doc.getLanguage());
         for (Span sentenceSpan : sentenceSpans) {
             // Feed annotations
             int sentenceOffsetBegin = sentenceSpan.getStart();
@@ -115,14 +117,14 @@ public final class OpennlpPipeline extends AbstractPipeline {
             annotations.add(SENTENCE, sentenceOffsetBegin, sentenceOffsetEnd);
 
             // Tokenize sentence
-            String sentence = sentenceSpan.getCoveredText(content).toString();
-            Span[] sentenceTokenSpans = tokenize(sentence, language);
+            String sentence = sentenceSpan.getCoveredText(doc.getContent()).toString();
+            Span[] sentenceTokenSpans = tokenize(sentence, doc.getLanguage());
             String[] sentenceTokens  = spansToStrings(sentenceTokenSpans, sentence);
 
             // Pos-tag sentence
             String[] sentencePosTags = new String[0];
             if (targetStages.contains(POS)) {
-                sentencePosTags = postag(sentenceTokens, language);
+                sentencePosTags = postag(sentenceTokens, doc.getLanguage());
             }
 
             // Feed annotations with token and pos
@@ -138,7 +140,7 @@ public final class OpennlpPipeline extends AbstractPipeline {
 
             // NER on sentence
             if (targetStages.contains(NER)) {
-                for (NameFinderME nameFinderME : nerFinder.get(language)) {
+                for (NameFinderME nameFinderME : nerFinder.get(doc.getLanguage())) {
                     Span[] nerSpans = nameFinderME.find(sentenceTokens);
                     for (Span nerSpan : nerSpans) {
                         int nerStart = sentenceOffsetBegin + sentenceTokenSpans[nerSpan.getStart()].getStart();
@@ -148,7 +150,7 @@ public final class OpennlpPipeline extends AbstractPipeline {
                 }
             }
         }
-        return annotations;
+        return allFrom(doc.getContent(), annotations);
     }
 
     private String spanToString(Span span, String[] elements) {
