@@ -18,10 +18,10 @@ public abstract class OpenNlpModels extends AbstractModels<ArtifactProvider> {
     protected String getVersion() { return VERSION;}
 
     @Override
-    protected ArtifactProvider loadModelFile(Language language, ClassLoader loader) throws IOException {
+    protected ArtifactProvider loadModelFile(Language language) throws IOException {
         final String modelPath = getModelPath(language);
         LOGGER.info("loading model file " + modelPath);
-        try (InputStream modelIS = loader.getResourceAsStream(modelPath)) {
+        try (InputStream modelIS = ClassLoader.getSystemResourceAsStream(modelPath)) {
             return createModel(modelIS);
         }
      }

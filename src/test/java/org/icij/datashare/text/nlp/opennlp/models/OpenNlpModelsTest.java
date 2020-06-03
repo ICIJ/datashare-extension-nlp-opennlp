@@ -37,7 +37,7 @@ public class OpenNlpModelsTest {
         @Override
         String getModelPath(Language languate) { return "unused";}
         @Override
-        protected boolean isPresent(Language language, ClassLoader loader) {return false;}
+        protected boolean isPresent(Language language) {return false;}
         @Override
         protected RemoteFiles getRemoteFiles() { return mockRemoteFiles;}
     }

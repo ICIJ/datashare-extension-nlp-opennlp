@@ -57,12 +57,12 @@ public class OpenNlpNerModels extends OpenNlpModels {
     }
 
     @Override
-    protected ArtifactProvider loadModelFile(Language language, ClassLoader loader) throws IOException {
+    protected ArtifactProvider loadModelFile(Language language) throws IOException {
         OpenNlpCompositeModel compositeModels = new OpenNlpCompositeModel(language);
         for (String p: modelsFilenames.get(language).values()) {
             final Path path = getModelsBasePath(language).resolve(p);
             LOGGER.info("loading NER model file " + path);
-            try (InputStream modelIS = loader.getResourceAsStream(path.toString())) {
+            try (InputStream modelIS = ClassLoader.getSystemResourceAsStream(path.toString())) {
                 compositeModels.add(createModel(modelIS));
             }
         }
