@@ -6,7 +6,7 @@
 
     <groupId>org.icij.datashare</groupId>
     <artifactId>datashare-nlp-opennlp</artifactId>
-    <version>7.0.0</version>
+    <version>8.0.0</version>
     <packaging>jar</packaging>
 
     <name>OpenNLP datashare extension</name>
