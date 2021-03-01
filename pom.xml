@@ -123,6 +123,7 @@
                                     <artifact>*:*</artifact>
                                     <excludes>
                                         <exclude>opennlp/tools/util/ext/**</exclude>
+                                        <exclude>com/google/common/collect/ComputingConcurrentHashMap*</exclude>
                                     </excludes>
                                 </filter>
                             </filters>
