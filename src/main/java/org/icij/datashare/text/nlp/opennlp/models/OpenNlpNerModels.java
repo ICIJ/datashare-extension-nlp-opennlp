@@ -4,7 +4,7 @@ import opennlp.tools.namefind.TokenNameFinderModel;
 import opennlp.tools.util.model.ArtifactProvider;
 import org.icij.datashare.text.Language;
 import org.icij.datashare.text.NamedEntity;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import java.lang.UnsupportedOperationException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -76,6 +76,6 @@ public class OpenNlpNerModels extends OpenNlpModels {
 
     @Override
     String getModelPath(Language language) {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
     }
 }
