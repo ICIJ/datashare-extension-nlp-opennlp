@@ -6,7 +6,7 @@
 
     <groupId>org.icij.datashare</groupId>
     <artifactId>datashare-nlp-opennlp</artifactId>
-    <version>8.0.2</version>
+    <version>9.0.0</version>
     <packaging>jar</packaging>
 
     <name>OpenNLP datashare extension</name>
@@ -48,12 +48,14 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>11</java.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <java.version>17</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <jackson.version>2.10.2</jackson.version>
         <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
-        <opennlp.version>1.9.1</opennlp.version>
+        <opennlp.version>2.5.3</opennlp.version>
         <guice.version>4.1.0</guice.version>
 
     </properties>
@@ -62,7 +64,7 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>datashare-api</artifactId>
-            <version>7.30.0</version>
+            <version>14.3.2</version>
         </dependency>
 
         <dependency>
@@ -99,8 +101,8 @@
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
-            <artifactId>mockito-all</artifactId>
-            <version>2.0.2-beta</version>
+            <artifactId>mockito-core</artifactId>
+            <version>5.10.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

@@ -6,11 +6,9 @@ import org.icij.datashare.text.Language;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.Map;
 
 import static org.icij.datashare.text.Language.*;
-import static org.icij.datashare.text.nlp.NlpStage.TOKEN;
 
 
 public class OpenNlpTokenModels extends OpenNlpModels {
@@ -33,13 +31,12 @@ public class OpenNlpTokenModels extends OpenNlpModels {
     }
 
     private OpenNlpTokenModels() {
-        super(TOKEN);
-        modelFilenames = new HashMap<Language, String>(){{
-            put(ENGLISH, "en-token.bin");
-            put(SPANISH, "en-token.bin");
-            put(FRENCH,  "fr-token.bin");
-            put(GERMAN,  "de-token.bin");
-        }};
+        super();
+        modelFilenames = Map.of(
+            ENGLISH, "en-token.bin",
+            SPANISH, "en-token.bin",
+            FRENCH,  "fr-token.bin"
+        );
     }
 
     @Override

@@ -1,5 +1,12 @@
 package org.icij.datashare.text.nlp.opennlp.models;
 
+import static org.icij.datashare.text.Language.ENGLISH;
+import static org.icij.datashare.text.Language.FRENCH;
+import static org.icij.datashare.text.Language.SPANISH;
+import static org.icij.datashare.text.NamedEntity.Category.LOCATION;
+import static org.icij.datashare.text.NamedEntity.Category.ORGANIZATION;
+import static org.icij.datashare.text.NamedEntity.Category.PERSON;
+
 import opennlp.tools.namefind.TokenNameFinderModel;
 import opennlp.tools.util.model.ArtifactProvider;
 import org.icij.datashare.text.Language;
@@ -9,12 +16,8 @@ import java.lang.UnsupportedOperationException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
-import java.util.HashMap;
 import java.util.Map;
 
-import static org.icij.datashare.text.Language.*;
-import static org.icij.datashare.text.NamedEntity.Category.*;
-import static org.icij.datashare.text.nlp.NlpStage.NER;
 
 
 public class OpenNlpNerModels extends OpenNlpModels {
@@ -36,24 +39,24 @@ public class OpenNlpNerModels extends OpenNlpModels {
      }
 
     private OpenNlpNerModels() {
-        super(NER);
-        modelsFilenames = new HashMap<Language, Map<NamedEntity.Category, String>>(){{
-            put(ENGLISH, new HashMap<NamedEntity.Category, String>(){{
-                put(PERSON,       "en-ner-person.bin");
-                put(ORGANIZATION, "en-ner-organization.bin");
-                put(LOCATION,     "en-ner-location.bin");
-            }});
-            put(SPANISH, new HashMap<NamedEntity.Category, String>(){{
-                put(PERSON,       "es-ner-person.bin");
-                put(ORGANIZATION, "es-ner-organization.bin");
-                put(LOCATION,     "es-ner-location.bin");
-            }});
-            put(FRENCH, new HashMap<NamedEntity.Category, String>(){{
-                put(PERSON,       "fr-ner-person.bin");
-                put(ORGANIZATION, "fr-ner-organization.bin");
-                put(LOCATION,     "fr-ner-location.bin");
-            }});
-        }};
+        super();
+        modelsFilenames = Map.of(
+            ENGLISH, Map.of(
+                PERSON, "en-ner-person.bin",
+                ORGANIZATION, "en-ner-organization.bin",
+                LOCATION, "en-ner-location.bin"
+            ),
+            FRENCH, Map.of(
+                PERSON, "fr-ner-person.bin",
+                ORGANIZATION, "fr-ner-organization.bin",
+                LOCATION, "fr-ner-location.bin"
+            ),
+            SPANISH, Map.of(
+                PERSON, "es-ner-person.bin",
+                ORGANIZATION, "es-ner-organization.bin",
+                LOCATION, "es-ner-location.bin"
+            )
+        );
     }
 
     @Override
