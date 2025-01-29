@@ -1,13 +1,5 @@
 package org.icij.datashare.text.nlp.opennlp;
 
-import com.google.inject.Inject;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.function.Function;
-import java.util.stream.Stream;
 import opennlp.tools.namefind.NameFinderME;
 import opennlp.tools.namefind.TokenNameFinderModel;
 import opennlp.tools.sentdetect.SentenceDetector;
@@ -29,6 +21,14 @@ import org.icij.datashare.text.nlp.opennlp.models.OpenNlpNerModels;
 import org.icij.datashare.text.nlp.opennlp.models.OpenNlpSentenceModels;
 import org.icij.datashare.text.nlp.opennlp.models.OpenNlpTokenModels;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Stream;
+
 import static opennlp.tools.util.Span.spansToStrings;
 import static org.icij.datashare.text.Language.ENGLISH;
 import static org.icij.datashare.text.Language.FRENCH;
@@ -42,7 +42,6 @@ public final class OpennlpPipeline extends AbstractPipeline {
     Map<Language, Tokenizer> tokenizer;
     Map<Language, List<NameFinderME>> nerFinder;
 
-    @Inject
     public OpennlpPipeline(final PropertiesProvider propertiesProvider) {
         super(propertiesProvider.getProperties());
         sentencer = new HashMap<>();
@@ -66,7 +65,7 @@ public final class OpennlpPipeline extends AbstractPipeline {
 
     @Override
     public List<NamedEntity> process(Document doc) {
-        return process(doc, doc.getContentTextLength(), doc.getContentTextLength());
+        return process(doc, doc.getContentTextLength(), 0);
     }
 
     @Override
@@ -74,7 +73,7 @@ public final class OpennlpPipeline extends AbstractPipeline {
         Annotations annotations = new Annotations(doc.getId(), getType(), doc.getLanguage());
 
         // Split input into sentences
-        String text = doc.getContent().substring(contentLength, contentLength + contentLength);
+        String text = doc.getContent().substring(contentOffset, contentOffset + contentLength);
         Span[] sentenceSpans = sentences(text, doc.getLanguage());
         for (Span sentenceSpan : sentenceSpans) {
             // Feed annotations
