@@ -72,7 +72,7 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>datashare-api</artifactId>
-            <version>14.4.0</version>
+            <version>14.4.3</version>
         </dependency>
 
         <dependency>
