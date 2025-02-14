@@ -15,7 +15,22 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-      - name: Publish package
-        run: mvn --batch-mode deploy
+      - name: Build with Maven
+        run: mvn package -Dmaven.test.skip=true
+      - name: Create GitHub Release
+        id: create_release
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{ github.ref_name }}
+          release_name: ${{ github.ref_name }}
+          draft: false
+          prerelease: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload JAR as Release Asset
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: target/datashare-nlp-opennlp-${{ github.ref_name }}-jar-with-dependencies.jar
+          asset_name: datashare-nlp-opennlp-${{ github.ref_name }}-jar-with-dependencies.jar
+          asset_content_type: application/java-archive
