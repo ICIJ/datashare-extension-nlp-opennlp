@@ -63,7 +63,7 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <jackson.version>2.10.2</jackson.version>
         <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
-        <opennlp.version>2.5.3</opennlp.version>
+        <opennlp.version>2.5.9</opennlp.version>
         <guice.version>4.1.0</guice.version>
 
     </properties>
