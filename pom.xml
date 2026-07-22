@@ -65,6 +65,8 @@
         <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
         <opennlp.version>2.5.3</opennlp.version>
         <guice.version>4.1.0</guice.version>
+        <maven-shade.version>3.6.2</maven-shade.version>
+        <maven-dependency.version>3.6.1</maven-dependency.version>
 
     </properties>
 
@@ -73,6 +75,7 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>datashare-api</artifactId>
             <version>14.4.3</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
@@ -86,6 +89,7 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>1.7.25</version>
+            <scope>provided</scope>
         </dependency>
 
         <!-- Test dependencies -->
@@ -113,6 +117,7 @@
         <plugins>
             <plugin>
                 <artifactId>maven-shade-plugin</artifactId>
+                <version>${maven-shade.version}</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -128,6 +133,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-dependency-plugin</artifactId>
+                <version>${maven-dependency.version}</version>
             </plugin>
         </plugins>
     </build>
